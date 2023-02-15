@@ -4,13 +4,9 @@
   "keywords": [
     "telegram",
     "best",
-    "yt-dlp",
-    "downloader",
     "open",
     "source",
-    "ffmpeg",
-    "remote",
-    "uploader"
+    "ffmpeg"
   ],
   "website": "kalanakt.github.io/projects/telegram/all-url-uploader ",
   "repository": "https://github.com/kalanakt/All-Url-Uploader",
@@ -54,7 +50,7 @@
   "formation": {
     "worker": {
       "quantity": 1,
-      "size": "free"
+      "size": "eco"
     }
   }
 }
