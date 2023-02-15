@@ -162,11 +162,14 @@ async def download_coroutine(bot, session, url, file_name, chat_id, message_id, 
                     break
                 f_handle.write(chunk)
                 downloaded += Config.CHUNK_SIZE
+                
+                print("DownloadedDDDDDDDDDDDDD",downloaded)
                 now = time.time()
                 diff = now - start
                 if round(diff % 5.0) == 0 or downloaded == total_length:
                     percentage = downloaded * 100 / total_length
                     speed = downloaded / diff
+                    print("SPEEDDDDDDDDDD",speed)
                     elapsed_time = round(diff) * 1000
                     time_to_completion = (
                         round((total_length - downloaded) / speed) * 1000)
