@@ -4,6 +4,7 @@ hachoir
 numpy
 Pillow
 pyrogram==2.0.43
+telegraph
 requests
 tgcrypto
 olefile
