@@ -21,7 +21,7 @@
 # SOFTWARE
 
 import logging
-
+from PIL import Image
 from hachoir.parser import createParser
 from hachoir.metadata import extractMetadata
 
@@ -68,3 +68,15 @@ async def Mdata03(download_directory):
         if metadata is not None and metadata.has("duration")
         else 0
     )
+
+
+async def make_thumb(thumb_image_path, width, height):
+  thumb_size = (width, height)
+  try:
+    img = Image.new('RGB', thumb_size, (85, 85, 85))
+    img.save(thumb_image_path)
+  except:
+    img = Image.new('RGB', (1280, 1280), (85, 85, 85))
+    img.save(thumb_image_path)
+
+  return thumb_image_path
