@@ -20,10 +20,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE
 
-# edit this file with your veriable if you'r deploy bot via locally | vps
+import os
+
+import logging
+
+logging.basicConfig(
+    format='%(name)s - %(levelname)s - %(message)s',
+    handlers=[logging.FileHandler('log.txt'),
+              logging.StreamHandler()],
+    level=logging.INFO
+)
+
+
+TASKS = {}
+DONT_SEND_TASK = '''Please don't send new task until the previous one has been completed.
+
+There will be time gap between two tasks which will be same as time consumed by previous task.
+
+If you don't want to receive time gap, please consider to upgrade /plan'''
 
 class Config(object):
-
+    WEBHOOK = os.environ.get("BOT_TOKEN", False)
     # get a token from @BotFather
     BOT_TOKEN = "5398878793:AAEpJan80_J9LZOWuu5An5aamEhTg0BJTmo"
 
@@ -48,3 +65,36 @@ class Config(object):
 
     # auth users
     AUTH_USERS = [OWNER_ID]
+    # Get these values from my.telegram.org
+    # Array to store users who are authorized to use the bot
+
+    # File /video download location
+    DOWNLOAD_LOCATION = "./DOWNLOADS"
+    # TASKS = {}
+
+    MEGA_EMAIL = os.environ.get("MEGA_EMAIL", "None")
+    # If deploying on vps edit the above value as example := Mega_email = "Your-Mega_email-inside-inverted-commas."
+
+    # This is not necessary! Enter your mega password only if you have a mega.nz account with pro/business features.
+    MEGA_PASSWORD = os.environ.get("MEGA_PASSWORD", "None")
+    # If deploying on vps edit the above value as example := Mega_password = "Your-Mega_password-inside-inverted-commas."
+    # Telegram maximum file upload size
+    TG_MAX_FILE_SIZE = 4194304000
+    
+
+    # Chunk size that should be used with requests
+    CHUNK_SIZE = int(os.environ.get("CHUNK_SIZE", 128))
+    # Proxy for accessing youtube-dl in GeoRestricted Areas
+    # Get your own proxy from https://github.com/rg3/youtube-dl/issues/1091#issuecomment-230163061
+    HTTP_PROXY = os.environ.get("HTTP_PROXY", "")
+
+    # Set timeout for subprcess
+    PROCESS_MAX_TIMEOUT = 3700
+
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -100))
+    OWNER_ID = int(os.environ.get("OWNER_ID", "12356"))
+    BOT_USERNAME = os.environ.get("BOT_USERNAME", "")
+    ADL_BOT_RQ = {}
+    AUTH_USERS = list({int(x)
+                      for x in os.environ.get("AUTH_USERS", "0").split()})
+    AUTH_USERS.append(OWNER_ID)
