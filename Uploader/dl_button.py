@@ -25,10 +25,12 @@ import json
 import time
 import aiohttp
 import asyncio
-import math
+import math,random
 from datetime import datetime
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from Uploader.functions.display_progress import humanbytes, TimeFormatter
+from Uploader.functions.help_Nekmo_ffmpeg import take_screen_shot
+
 from Uploader.functions.progress2 import progress_for_pyrogram as progress2
 from Uploader.utitles import *
 from Uploader.script import Translation
@@ -119,10 +121,11 @@ async def ddl_call_back(bot, update, url_with_name, file_x):
       start_time = time.time()
       if file_x.upper() in video_formats:
         width, height, duration = await Mdata01(download_directory)
+        thumbnail = await take_screen_shot(download_directory, os.path.dirname(download_directory), random.randint(0, duration - 1))
         await bot.send_video(
           chat_id=update.chat.id,
           video=download_directory,
-          thumb=thumb,
+          thumb=thumbnail,
           caption=description,
           duration=duration,
           width=width,
