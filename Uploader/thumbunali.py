@@ -21,38 +21,44 @@
 # SOFTWARE
 
 import os
-
+from telegraph import upload_file
 from pyrogram import Client, filters
 
 if bool(os.environ.get("WEBHOOK")):
     from Uploader.config import Config
 else:
     from sample_config import Config
-
+from Uploader.functions.database import *
 
 @Client.on_message(filters.photo & filters.incoming & filters.private)
-async def save_photo(bot, message):
-    download_location = f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg"
-    await message.download(file_name=download_location)
+async def save_photo(bot, msg):
+    # medianame = Config.DOWNLOAD_LOCATION + str(msg.from_user.id)
+    # await msg.download(medianame)
+ 
+    # response = upload_file(medianame)
+    # photo = f"https://telegra.ph{response[0]}"
+    addDATA(msg.chat.id,"PHOTO_THUMB",msg.photo.file_id)
 
-    await message.reply_text(
-        text="your custom thumbnail is saved",
+  
+    await msg.reply_text(
+        text="Your custom thumbnail is saved",
         quote=True
     )
 
 
 @Client.on_message(filters.command("thumb") & filters.incoming & filters.private)
-async def send_photo(bot, message):
-    download_location = f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg"
+async def send_photo(bot, msg):
+    # download_location = f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg"
+    THUMB = find_any(msg.chat.id,"PHOTO_THUMB")
 
-    if os.path.isfile(download_location):
-        await message.reply_photo(
-            photo=download_location,
-            caption="your custom thumbnail",
+    if THUMB:
+        await msg.reply_photo(
+            photo=THUMB,
+            caption="👆 Custom thumbnail",
             quote=True
         )
     else:
-        await message.reply_text(text="you don't have set thumbnail yet!. send .jpg img to save as thumbnail.", quote=True)
+        await msg.reply_text(text="you don't have set thumbnail yet!. send .jpg img to save as thumbnail.", quote=True)
 
 
 @Client.on_message(filters.command("delthumb") & filters.incoming & filters.private)
