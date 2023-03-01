@@ -32,6 +32,13 @@ logging.basicConfig(
 )
 
 
+TASKS = {}
+DONT_SEND_TASK = '''Please don't send new task until the previous one has been completed.
+
+There will be time gap between two tasks which will be same as time consumed by previous task.
+
+If you don't want to receive time gap, please consider to upgrade /plan'''
+
 class Config(object):
     WEBHOOK = os.environ.get("BOT_TOKEN", False)
     # Get a token from @BotFather
@@ -44,6 +51,7 @@ class Config(object):
 
     # File /video download location
     DOWNLOAD_LOCATION = "./DOWNLOADS"
+    # TASKS = {}
 
     MEGA_EMAIL = os.environ.get("MEGA_EMAIL", "None")
     # If deploying on vps edit the above value as example := Mega_email = "Your-Mega_email-inside-inverted-commas."
@@ -53,6 +61,7 @@ class Config(object):
     # If deploying on vps edit the above value as example := Mega_password = "Your-Mega_password-inside-inverted-commas."
     # Telegram maximum file upload size
     TG_MAX_FILE_SIZE = 4194304000
+    
 
     # Chunk size that should be used with requests
     CHUNK_SIZE = int(os.environ.get("CHUNK_SIZE", 128))
